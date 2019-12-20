@@ -11,7 +11,9 @@ import com.openshift.wildwest.helpers.PlatformObjectHelper;
 import com.openshift.wildwest.models.Game;
 import com.openshift.wildwest.models.Score;
 import com.openshift.wildwest.models.PlatformObject;
+import io.fabric8.kubernetes.client.KubernetesClient;
 
+import javax.inject.Inject;
 
 	// oc policy add-role-to-user view system:serviceaccount:wildwest:default where wildwest
 	// is the project name
@@ -24,7 +26,11 @@ import com.openshift.wildwest.models.PlatformObject;
 @RestController
 public class APIController {
 	@Autowired
-	private GameController gameController;
+	GameController gameController;
+	
+	@Inject
+	KubernetesClient client;
+
 
 	@RequestMapping("/score")
 	public Score getScore(@RequestParam(value = "gameID") String gameID) {
@@ -43,13 +49,13 @@ public class APIController {
 	
 	@RequestMapping("/objects")
 	public List<PlatformObject> getPlatformObjects() {
-		PlatformObjectHelper helper = new PlatformObjectHelper();
+		PlatformObjectHelper helper = new PlatformObjectHelper(client);
 		return helper.getPlatformObjects();
 	}
 
 	@RequestMapping("/getRandomObject")
 	public PlatformObject getRandomPlatformObject() {
-		PlatformObjectHelper helper = new PlatformObjectHelper();
+		PlatformObjectHelper helper = new PlatformObjectHelper(client);
 		return helper.getRandomPlatformObject();
 	}
 
@@ -60,7 +66,7 @@ public class APIController {
 							@RequestParam(value = "objectType") String objectType,
 							@RequestParam(value = "objectName") String objectName) {
 
-		PlatformObjectHelper helper = new PlatformObjectHelper();
+		PlatformObjectHelper helper = new PlatformObjectHelper(client);
 		helper.deletePlatformObject(gameID, objectID, objectType, objectName);
 	}
 	

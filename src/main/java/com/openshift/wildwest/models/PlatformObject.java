@@ -2,9 +2,9 @@ package com.openshift.wildwest.models;
 
 public class PlatformObject {
 
-	private String objectID;
-	private String objectName;
-	private String objectType;
+	String objectID;
+	String objectName;
+	String objectType;
 	
 	public PlatformObject(String objectID, String objectName, String objectType) {
 		this.objectID = objectID;

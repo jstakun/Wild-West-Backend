@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodList;
-import io.fabric8.openshift.client.DefaultOpenShiftClient;
-import io.fabric8.openshift.client.OpenShiftClient;
+import io.fabric8.kubernetes.client.KubernetesClient;
+
+import javax.inject.Inject;
 
 @RestController
 public class TestAPI {
 
-	private OpenShiftClient client;
+    @Inject
+	KubernetesClient client;
 
 	// oc policy add-role-to-user view system:serviceaccount:wildwest:default where wildwest
 	// is the project name
@@ -25,14 +27,9 @@ public class TestAPI {
 
 	@RequestMapping("/kube")
 	public Hashtable getPlatformObjects() {
-		client = new DefaultOpenShiftClient();
-		List<Pod> pods = null;
-		PodList theList = client.pods().list();
-		ArrayList arrayList = new ArrayList();
 		Hashtable hashtable = new Hashtable<>();
-		pods = theList.getItems();
-
-		for (Pod currPod : pods) {
+		
+		for (Pod currPod : client.pods().list().getItems()) {
 			hashtable.put(currPod.getMetadata().getUid(), currPod.getMetadata().getName());
 		}
 

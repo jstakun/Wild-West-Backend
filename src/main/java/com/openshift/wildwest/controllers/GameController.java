@@ -3,15 +3,14 @@ package com.openshift.wildwest.controllers;
 import java.util.Hashtable;
 import java.util.Random;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import com.openshift.wildwest.models.*;
 import com.openshift.wildwest.models.Game.GameMode;
 
 @Configuration
-@Scope(value = "singleton")
 public class GameController {
-	private Hashtable<String, Game> games = new Hashtable<>();
+	
+	Hashtable<String, Game> games = new Hashtable<>();
 
 	public Game createGame() {
 		Game newGame = new Game();

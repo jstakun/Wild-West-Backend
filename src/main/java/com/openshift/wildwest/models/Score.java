@@ -2,8 +2,8 @@ package com.openshift.wildwest.models;
 
 public class Score {
 
-    private int score;
-    private String gameID;
+    int score;
+    String gameID;
 
     public String getGameID() {
 		return gameID;

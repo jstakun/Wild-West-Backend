@@ -4,10 +4,8 @@ import java.util.Hashtable;
 
 public class Game {
 
-	private Score score;
-	private Hashtable<String, PlatformObject> gameObjects;
-	// The game mode determines if we are returning Kubernetes only objects or OpenShift
-	// objects as well
+	Score score;
+	Hashtable<String, PlatformObject> gameObjects;
 	
 	public enum GameMode {
 		OPENSHIFT, KUBERNETES;

@@ -7,19 +7,15 @@ import com.openshift.wildwest.models.PlatformObject;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.Service;
-import io.fabric8.openshift.api.model.Build;
-import io.fabric8.openshift.api.model.BuildConfig;
-import io.fabric8.openshift.api.model.DeploymentConfig;
-import io.fabric8.openshift.api.model.Route;
-import io.fabric8.openshift.client.DefaultOpenShiftClient;
-import io.fabric8.openshift.client.OpenShiftClient;
+import io.fabric8.kubernetes.client.KubernetesClient;
+
 
 public class PlatformObjectHelper {
 
-	private OpenShiftClient client;
+    KubernetesClient client;
 
-	public PlatformObjectHelper() {
-		client = new DefaultOpenShiftClient();
+	public PlatformObjectHelper(KubernetesClient client) {
+		this.client = client;
 	}
 
 	public List<PlatformObject> getPlatformObjects() {
@@ -54,22 +50,21 @@ public class PlatformObjectHelper {
 	private List<PlatformObject> getBuilds() {
 		ArrayList<PlatformObject> theBuilds = new ArrayList<>();
 
-		List<Build> builds = client.builds().list().getItems();
-		for (Build currBuild : builds) {
-			theBuilds.add(
-					new PlatformObject(currBuild.getMetadata().getUid(), currBuild.getMetadata().getName(), "BUILD"));
-		}
+		//List<Build> builds = client.builds().list().getItems();
+		//for (Build currBuild : builds) {
+		//	theBuilds.add(
+		//			new PlatformObject(currBuild.getMetadata().getUid(), currBuild.getMetadata().getName(), "BUILD"));
+		//}
 
 		return theBuilds;
 	}
 
 	private List<PlatformObject> getDeploymentConfigs() {
 		ArrayList<PlatformObject> theDeployments = new ArrayList<>();
-		List<DeploymentConfig> deploymentConfigs = client.deploymentConfigs().list().getItems();
-		for (DeploymentConfig currConfig : deploymentConfigs) {
-			theDeployments.add(new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(),
-					"DEPLOYMENT_CONFIG"));
-		}
+		//List<DeploymentConfig> deploymentConfigs = client.deploymentConfigs().list().getItems();
+		//for (DeploymentConfig currConfig : deploymentConfigs) {
+		//	theDeployments.add(new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(), "DEPLOYMENT_CONFIG"));
+		//}
 
 		return theDeployments;
 	}
@@ -77,11 +72,10 @@ public class PlatformObjectHelper {
 
 	private List<PlatformObject> getBuildConfigs() {
 		ArrayList<PlatformObject> theList = new ArrayList<>();
-		List<BuildConfig> theItems = client.buildConfigs().list().getItems();
-		for (BuildConfig currConfig : theItems) {
-			theList.add(new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(),
-					"BUILD_CONFIG"));
-		}
+		//List<BuildConfig> theItems = client.buildConfigs().list().getItems();
+		//for (BuildConfig currConfig : theItems) {
+		//	theList.add(new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(),"BUILD_CONFIG"));
+		//}
 		return theList;
 	}
 
@@ -107,11 +101,11 @@ public class PlatformObjectHelper {
 
 	private List<PlatformObject> getRoutes() {
 		ArrayList<PlatformObject> theList = new ArrayList<>();
-		List<Route> theItems = client.routes().list().getItems();
-		for (Route currConfig : theItems) {
-			theList.add(
-					new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(), "ROUTE"));
-		}
+		//List<Route> theItems = client.routes().list().getItems();
+		//for (Route currConfig : theItems) {
+		//	theList.add(
+		//			new PlatformObject(currConfig.getMetadata().getUid(), currConfig.getMetadata().getName(), "ROUTE"));
+		//}
 		return theList;
 	}
 
@@ -122,9 +116,9 @@ public class PlatformObjectHelper {
 			case "POD":
 				client.pods().withName(objectName).delete();
 				break;
-			case "BUILD":
-				client.builds().withName(objectName).delete();
-				break;
+			//case "BUILD":
+				//client.builds().withName(objectName).delete();
+				//break;
 		}
 		
 	}
